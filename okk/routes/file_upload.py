@@ -3,8 +3,7 @@ from pathlib import Path
 
 from flask import Flask, request, jsonify
 
-from okk.models import Batch
-from okk.routes.errors import ok
+from okk.responses.common import ok
 from okk.services.batchs import get_batch
 from okk.services.save_file import FileCheckerSaver
 from okk.services.add_files_for_batch import add_files_for_batchs

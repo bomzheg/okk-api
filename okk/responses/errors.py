@@ -1,9 +1,7 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
 
-
-ok = {'ok': True}
-not_ok = {'ok': False}
+from okk.responses.common import not_ok
 
 
 def error_response(status_code, message=None):

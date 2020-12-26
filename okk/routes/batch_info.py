@@ -6,7 +6,8 @@ from sqlalchemy.exc import IntegrityError
 
 from okk.config.config_type import RZNLogin
 from okk.models.db import db
-from okk.routes.errors import bad_request, ok, forbidden
+from okk.responses.common import ok
+from okk.responses.errors import bad_request, forbidden
 from okk.services.batchs import get_batch, patch_batch_service, prepare_batch_args, process_batch_creation
 from okk.services.rzn_sender import RZNGaseous
 from okk.services.send_gaseous_batch import send_batch
