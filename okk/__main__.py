@@ -1,7 +1,7 @@
 from flask import Flask
 
 from okk.config import config, Config, WebConfig
-from okk.middleware.acl import ACLMiddleware
+from okk.middleware import setup_middleware
 from okk.routes import setup_all_routes
 from okk.models import init_db, db, init_migrator
 
@@ -15,7 +15,7 @@ def create_web_server():
 def configure_web_server(app: Flask, current_config: Config):
     setup_all_routes(app, current_config)
     app.config.from_object(current_config.flask_config)
-    app.wsgi_app = ACLMiddleware(app.wsgi_app, current_config.allowed_tokens)
+    setup_middleware(app, current_config)
     init_db(app)
     init_migrator(app, db)
     return app

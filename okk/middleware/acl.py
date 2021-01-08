@@ -7,6 +7,10 @@ from okk.responses.errors import wrap_error_message
 
 
 class ACLMiddleware:
+    """
+    Current middleware support simple check auth by token.
+    tokens is configured at start application and can't be changed next
+    """
     def __init__(self, app, allowed_tokens: typing.Iterable):
         self.app = app
         self.allowed_tokens = allowed_tokens
