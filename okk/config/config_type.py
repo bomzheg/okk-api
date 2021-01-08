@@ -1,4 +1,4 @@
-
+import typing
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -36,6 +36,7 @@ class WebConfig:
 class FlaskConfig:
     SQLALCHEMY_DATABASE_URI: str = None
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = None
+    JSONIFY_PRETTYPRINT_REGULAR: bool = None
     SECRET_KEY: str = None
     UPLOAD_FOLDER: Path = None
 
@@ -51,6 +52,7 @@ class Config:
     app_dir: Path = None
     files_for_db_dir: Path = None
     allowed_extensions: frozenset = None
+    allowed_tokens: typing.Iterable = None
     db_config: DBConfig = None
     web_config: WebConfig = None
     flask_config: FlaskConfig = None

@@ -38,6 +38,7 @@ web_config = WebConfig(
 flask_config = FlaskConfig(
     SQLALCHEMY_DATABASE_URI=current_db_config.connect_str,
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    JSONIFY_PRETTYPRINT_REGULAR=True,
     SECRET_KEY=os.getenv("SECRET_TOKEN", default="AgACAgIAAxk_7dfV98j2sSgU1d1Ej3CCc2nBAACe68xG18sQEq5"),
     UPLOAD_FOLDER=files_dir / "temp",
 )
@@ -51,6 +52,7 @@ config = Config(
     app_dir=app_dir,
     files_for_db_dir=files_dir,
     allowed_extensions=frozenset({".pdf"}),
+    allowed_tokens=frozenset({os.getenv("TOKEN")}),
     db_config=current_db_config,
     web_config=web_config,
     flask_config=flask_config,
