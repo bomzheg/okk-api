@@ -66,8 +66,10 @@ class RZNGeneral:
         self.load_main_page()
 
     def load_main_page(self):
+        logger.info("try to get login page... ")
         self.driver.get(self.BASE_URL)
         self.web_wait.until(ec.element_to_be_clickable((By.NAME, self.NAME_LOGIN_FIELD)))
+        logger.info("login page loaded")
 
         login = self.driver.find_element_by_name(name=self.NAME_LOGIN_FIELD)
         login.send_keys(self.login)
@@ -75,11 +77,13 @@ class RZNGeneral:
         password.send_keys(self.password)
         submit = self.driver.find_element_by_class_name(self.CLASS_LOGIN_SUBMIT)
         submit.click()
+        logger.info("try to login... ")
         self.web_wait.until(
             ec.element_to_be_clickable((By.ID, self.ID_MAIN_MENU))
         )
 
         input_data_btn = self.driver.find_element_by_id(self.ID_MAIN_MENU)
+        logger.info("login successfully")
         input_data_btn.click()
 
     def load_last_batch_page(self):
@@ -98,21 +102,28 @@ class RZNGeneral:
         filter_button = self.driver.find_element_by_xpath(self.FILTER_BUTTON_XPATH)
         filter_button.click()
         self.web_wait.until(ec.element_to_be_clickable((By.XPATH, self.FIRST_ROW_XPATH)))
+        logger.info("last batch page loaded successfully")
 
         first_row = self.driver.find_element_by_xpath(self.FIRST_ROW_XPATH)
         first_row.click()
 
     def save_new_batch(self, butch_number: str, count: int, *args, **kwargs):
+        logger.info("preparing to save new batch...")
         self.web_wait.until(
             ec.element_to_be_clickable((By.XPATH, self.ADD_BUTCH_BUTTON))
         )
 
         add_button = self.driver.find_element_by_xpath(self.ADD_BUTCH_BUTTON)
         add_button.click()
+        logger.info("load new batch page...")
 
         self.web_wait.until(ec.element_to_be_clickable((By.XPATH, self.BUTCH_LOCATION_CHECK_BOX)))
 
+        logger.info("run specify product info...")
+
         self.specify_info_product(*args, **kwargs)
+
+        logger.info("product info specified")
 
         batch_number = self.driver.find_element_by_name(self.BUTCH_NUMBER_FIELD_NAME)
         batch_number.send_keys(butch_number)
@@ -123,8 +134,8 @@ class RZNGeneral:
         count_butch_location = self.driver.find_element_by_xpath(self.COUNT_BUTCH_CURRENT_LOCATION)
         count_butch_location.send_keys(count)
         confirm = self.driver.find_element_by_xpath(self.CONFIRM_BUTTON_XPATH)
-        breakpoint()
         confirm.click()
+        logger.info("try to save batch")
         self.confirm_alert()
 
     def specify_info_product(self, *args, **kwargs):
@@ -136,7 +147,7 @@ class RZNGeneral:
         alert = self.driver.switch_to.alert
         assert alert.text == self.ALERT_TEXT
         alert.accept()
-        logger.debug("accepting alert")
+        logger.info("accepting alert 'save data?'")
         # костыльное ожидание закрытия алерта TODO исправить (как?)
         sleep(2)
 
@@ -190,6 +201,7 @@ class RZNGaseous(RZNGeneral):
             approve_path: Path = None,
             ul_data=None
     ):
+        logger.info("specify gaseous oxygen batch info")
         if ul_data is not None:
             raise NotImplemented("Current version don't support change info about \"Уполномоченное лицо\"")
         table_volumes = self.driver.find_element_by_xpath(self.TABLE_VOLUMES)
