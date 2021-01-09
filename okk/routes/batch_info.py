@@ -70,12 +70,12 @@ def send_batch_route(batch_id: int, rzn_login: RZNLogin):
 
 
 def setup_batch_info(app: Flask, rzn_login: RZNLogin):
-    app.add_url_rule('/batchs/<int:batch_id>', 'GetBatchInfo', get_batch_info, methods=['GET'])
-    app.add_url_rule('/batchs/<int:batch_id>', 'PatchBatchInfo', patch_batch, methods=['PATCH'])
-    app.add_url_rule("/batchs", "AddNew", create_batch, methods=['POST'])
-    app.add_url_rule("/batchs", "GetAllBatchs", get_batchs, methods=["GET"])
+    app.add_url_rule('/batchs/<int:batch_id>/', 'GetBatchInfo', get_batch_info, methods=['GET'])
+    app.add_url_rule('/batchs/<int:batch_id>/', 'PatchBatchInfo', patch_batch, methods=['PATCH'])
+    app.add_url_rule("/batchs/", "AddNew", create_batch, methods=['POST'])
+    app.add_url_rule("/batchs/", "GetAllBatchs", get_batchs, methods=["GET"])
     app.add_url_rule(
-        "/batchs/<int:batch_id>",
+        "/batchs/<int:batch_id>/",
         "SendBatch",
         partial(send_batch_route, rzn_login=rzn_login),
         methods=['POST']
